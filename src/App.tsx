@@ -13,9 +13,7 @@ export default function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(
-      "https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=romantic-piano-112135.mp3",
-    );
+    audioRef.current = new Audio("/music/paulyudin-wedding-485932.mp3");
     audioRef.current.loop = true;
 
     return () => {
