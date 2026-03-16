@@ -2,8 +2,8 @@ import { motion } from "motion/react";
 
 export default function Footer() {
   return (
-    <footer className="py-24 bg-wedding-red text-white text-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/10" />
+    <footer className="py-24 bg-wedding-red text-white text-center relative overflow-hidden isolate z-50 shadow-[0_-20px_50px_rgba(0,0,0,0.2)]">
+      <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6">
         <motion.div

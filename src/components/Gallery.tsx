@@ -81,12 +81,12 @@ export default function Gallery() {
 
   const closeLightbox = () => setSelectedImageIndex(null);
 
-  const nextImage = (e: React.MouseEvent) => {
+  const nextImage = (e: any) => {
     e.stopPropagation();
     setSelectedImageIndex((prev) => (prev !== null && prev < GALLERY_IMAGES.length - 1 ? prev + 1 : 0));
   };
 
-  const prevImage = (e: React.MouseEvent) => {
+  const prevImage = (e: any) => {
     e.stopPropagation();
     setSelectedImageIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : GALLERY_IMAGES.length - 1));
   };
