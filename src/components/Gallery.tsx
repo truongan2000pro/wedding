@@ -41,9 +41,19 @@ export default function Gallery() {
     } else {
       document.body.style.overflow = "unset";
     }
+
+    // Background preloading after a short delay to prioritize initial load
+    const preloadTimer = setTimeout(() => {
+      GALLERY_IMAGES.forEach((image) => {
+        const img = new Image();
+        img.src = image.url;
+      });
+    }, 3000);
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
+      clearTimeout(preloadTimer);
     };
   }, [handleKeyDown, selectedImageIndex]);
 
@@ -97,6 +107,7 @@ export default function Gallery() {
               transition={{ duration: 0.7, delay: index * 0.05, ease: [0.21, 1.11, 0.81, 0.99] }}
               className={`
                 relative group cursor-pointer overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500
+                will-change-transform will-change-opacity
                 ${image.isLandscape ? "lg:col-span-3 aspect-video sm:col-span-2" : "lg:col-span-2 aspect-[3/4.5]"}
               `}
               onClick={() => setSelectedImageIndex(index)}
@@ -105,7 +116,7 @@ export default function Gallery() {
                 src={image.url}
                 alt={image.alt}
                 loading="lazy"
-                className="w-full h-full object-cover transform transition-transform duration-1000 ease-out group-hover:scale-110"
+                className="w-full h-full object-cover transform transition-transform duration-1000 ease-out group-hover:scale-110 will-change-transform"
               />
 
               {/* Premium Overlay */}
@@ -129,8 +140,8 @@ export default function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md overflow-hidden p-4 md:p-10"
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm overflow-hidden p-4 md:p-10"
             onClick={closeLightbox}
           >
             {/* Close Button */}
@@ -168,13 +179,13 @@ export default function Gallery() {
               <AnimatePresence mode="wait">
                 <motion.img
                   key={selectedImageIndex}
-                  initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
-                  animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, rotateY: -10 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                   src={GALLERY_IMAGES[selectedImageIndex].url}
                   alt={GALLERY_IMAGES[selectedImageIndex].alt}
-                  className="max-w-full max-h-full object-contain shadow-[0_30px_100px_rgba(0,0,0,0.5)] cursor-default"
+                  className="max-w-full max-h-full object-contain shadow-[0_30px_100px_rgba(0,0,0,0.5)] cursor-default will-change-transform"
                   onClick={(e) => e.stopPropagation()}
                 />
               </AnimatePresence>
