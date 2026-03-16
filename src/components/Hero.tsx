@@ -43,7 +43,7 @@ export default function Hero() {
         />
         {/* Desktop Background */}
         <img
-          src="/images/cover/10-1  NGOC LINH - TRUONG AN_14.jpg"
+          src="/images/cover/cover.jpg"
           alt="Wedding Background Desktop"
           className="hidden md:block w-full h-[120vh] -mt-[10vh] object-cover opacity-70"
         />
