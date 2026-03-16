@@ -36,9 +36,9 @@ export default function Hero() {
         }}
       >
         <img
-          src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop"
+          src="/images/cover/10-1  NGOC LINH - TRUONG AN_14.jpg"
           alt="Wedding Background"
-          className="w-full h-[120vh] -mt-[10vh] object-cover opacity-50" // Made taller to accommodate parallax
+          className="w-full h-[120vh] -mt-[10vh] object-cover opacity-70"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-wedding-red/95 via-wedding-red/50 to-black/30" />
       </motion.div>

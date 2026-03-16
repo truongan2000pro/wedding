@@ -147,93 +147,97 @@ export default function Invitation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section className="py-24 md:py-32 px-6 bg-wedding-bg bg-pattern relative perspective-1000 overflow-hidden" id="invitation">
+    <section className="py-16 md:py-20 px-6 bg-wedding-bg bg-pattern relative perspective-1000 overflow-hidden min-h-[680px] md:min-h-[900px] flex flex-col justify-center" id="invitation">
       {/* Ambient glows */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-wedding-red/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-wedding-gold/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto text-center">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-14"
-        >
-          <h2 className="text-4xl md:text-5xl font-serif text-wedding-red mb-3">Thiệp Mời</h2>
-          <div className="w-20 h-[1px] bg-wedding-red/30 mx-auto" />
-          {!isOpen && (
-            <p className="mt-4 text-wedding-text/60 font-sans text-sm tracking-widest uppercase animate-pulse">
+      <div className="w-full mx-auto text-center relative z-10">
+        {/* Section Title - Keep it contained */}
+        <div className="max-w-4xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="mb-14"
+          >
+            <h2 className="text-4xl md:text-5xl font-serif text-wedding-red mb-3">Thiệp Mời</h2>
+            <div className="w-20 h-[1px] bg-wedding-red/30 mx-auto" />
+            <p className={`mt-4 font-sans text-sm tracking-widest uppercase transition-opacity duration-500 ${isOpen ? 'opacity-0 select-none' : 'opacity-60 animate-pulse text-wedding-text/60'}`}>
               Nhấn vào phong bì để mở thiệp
             </p>
-          )}
-        </motion.div>
+          </motion.div>
+        </div>
 
-        {/* === ENVELOPE SCENE === */}
-        <AnimatePresence mode="wait">
-          {!isOpen ? (
-            /* --- CLOSED ENVELOPE --- */
-            <motion.div
-              key="envelope"
-              initial={{ opacity: 0, y: 40, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.85, y: -20 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="relative mx-auto cursor-pointer group w-full max-w-[380px] md:max-w-[525px]"
-              style={{ aspectRatio: "4/2.7" }}
-              onClick={() => setIsOpen(true)}
-              whileHover={{ scale: 1.03, y: -6 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              {/* Outer wrapper for idle floating animation */}
-              <motion.div
-                className="w-full h-full"
-                animate={{ y: [0, -10, 0], rotate: [-0.8, 0.8, -0.8] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                {/* Envelope Body */}
-                <EnvelopeBody isOpen={false} />
-
-                {/* Wax Seal — centered on the flap fold */}
+        {/* === ENVELOPE SCENE - Wider container to allow for larger envelope === */}
+        <div className="w-full max-w-[1100px] mx-auto px-4 mt-6">
+          <div className="relative min-h-[700px] md:min-h-[600px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {!isOpen ? (
+                /* --- CLOSED ENVELOPE --- */
                 <motion.div
-                  className="absolute z-10 rounded-full shadow-[0_4px_20px_rgba(197,160,89,0.5)]"
-                  style={{ width: 80, height: 80, top: "calc(50% - 32px)", left: "calc(50% - 40px)" }}
-                  animate={{ scale: [1, 1.06, 1] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
+                  key="envelope"
+                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85, y: -20 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  className="relative cursor-pointer group w-full max-w-[380px] md:max-w-[725px]"
+                  style={{ aspectRatio: "4/2.7" }}
+                  onClick={() => setIsOpen(true)}
+                  whileHover={{ scale: 1.03, y: -6 }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  <WaxSeal />
-                </motion.div>
+                  {/* Outer wrapper for idle floating animation */}
+                  <motion.div
+                    className="w-full h-full"
+                    animate={{ y: [0, -10, 0], rotate: [-0.8, 0.8, -0.8] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    {/* Envelope Body */}
+                    <EnvelopeBody isOpen={false} />
 
-                {/* Hover hint glow */}
-                <div className="absolute inset-0 rounded-sm bg-wedding-gold/0 group-hover:bg-wedding-gold/5 transition-colors duration-300 pointer-events-none" />
-              </motion.div>
-            </motion.div>
-          ) : (
-            /* --- OPEN: REVEALED INVITATION CARD --- */
-            <motion.div
-              key="card"
-              initial={{ opacity: 0, y: 60, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-              className="text-center"
-              style={{ perspective: 1200 }}
-            >
-              <InvitationCard />
-              {/* Re-seal hint */}
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                onClick={() => setIsOpen(false)}
-                className="mt-8 text-xs tracking-widest uppercase text-wedding-text/40 hover:text-wedding-gold transition-colors duration-300 font-sans"
-              >
-                ✕ Đóng thiệp
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                    {/* Wax Seal — centered on the flap fold */}
+                    <motion.div
+                      className="absolute z-10 rounded-full shadow-[0_4px_20px_rgba(197,160,89,0.5)]"
+                      style={{ width: 80, height: 80, top: "calc(50% - 32px)", left: "calc(50% - 40px)" }}
+                      animate={{ scale: [1, 1.06, 1] }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                      whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
+                    >
+                      <WaxSeal />
+                    </motion.div>
+
+                    {/* Hover hint glow */}
+                    <div className="absolute inset-0 rounded-sm bg-wedding-gold/0 group-hover:bg-wedding-gold/5 transition-colors duration-300 pointer-events-none" />
+                  </motion.div>
+                </motion.div>
+              ) : (
+                /* --- OPEN: REVEALED INVITATION CARD --- */
+                <motion.div
+                  key="card"
+                  initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+                  className="text-center w-full max-w-4xl mx-auto"
+                  style={{ perspective: 1200 }}
+                >
+                  <InvitationCard />
+                  {/* Re-seal hint */}
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    onClick={() => setIsOpen(false)}
+                    className="mt-8 text-xs tracking-widest uppercase text-wedding-text/40 hover:text-wedding-gold transition-colors duration-300 font-sans"
+                  >
+                    ✕ Đóng thiệp
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </section>
   );
