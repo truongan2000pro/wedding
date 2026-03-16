@@ -35,10 +35,17 @@ export default function Hero() {
           repeatType: "reverse",
         }}
       >
+        {/* Mobile Background */}
+        <img
+          src="/images/gallery/NDQ_7217.jpg"
+          alt="Wedding Background Mobile"
+          className="md:hidden w-full h-[120vh] -mt-[10vh] object-cover opacity-70"
+        />
+        {/* Desktop Background */}
         <img
           src="/images/cover/10-1  NGOC LINH - TRUONG AN_14.jpg"
-          alt="Wedding Background"
-          className="w-full h-[120vh] -mt-[10vh] object-cover opacity-70"
+          alt="Wedding Background Desktop"
+          className="hidden md:block w-full h-[120vh] -mt-[10vh] object-cover opacity-70"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-wedding-red/95 via-wedding-red/50 to-black/30" />
       </motion.div>
